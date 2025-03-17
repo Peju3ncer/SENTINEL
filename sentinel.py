@@ -27,19 +27,24 @@ def whois_lookup(domain):
         w = whois.whois(domain)
         print(f"{Fore.GREEN}[+] WHOIS Info for {domain}:{Fore.RESET}")
         print(w)
+    except whois.parser.PywhoisError:
+        print(f"{Fore.RED}[-] WHOIS lookup failed: Domain not found!{Fore.RESET}")
     except Exception as e:
-        print(f"{Fore.RED}[-] Gagal mendapatkan WHOIS info: {e}{Fore.RESET}")
+        print(f"{Fore.RED}[-] WHOIS lookup error: {e}{Fore.RESET}")
 
 # Port Scanner
 def port_scan(target, ports=[21, 22, 23, 25, 53, 80, 443, 3306, 8080]):
     print(colored(f"\n[🔎] Scanning ports on {target}...", "yellow"))
     for port in ports:
-        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        sock.settimeout(1)
-        result = sock.connect_ex((target, port))
-        if result == 0:
-            print(colored(f"   [✅] Port {port} is open!", "green"))
-        sock.close()
+        try:
+            sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            sock.settimeout(1)
+            result = sock.connect_ex((target, port))
+            if result == 0:
+                print(colored(f"   [✅] Port {port} is open!", "green"))
+            sock.close()
+        except Exception as e:
+            print(colored(f"   [❌] Error scanning port {port}: {e}", "red"))
 
 # Subdomain Finder
 def find_subdomains(target):
@@ -55,18 +60,15 @@ def find_subdomains(target):
     def check_sub(sub):
         url = f"http://{sub}.{target}"
         try:
-            response = requests.get(url, timeout=2, headers={"User-Agent": "Mozilla/5.0"})
+            response = requests.get(url, timeout=2)
             if response.status_code < 400:
                 print(colored(f"   [✅] Found: {url}", "green"))
         except requests.RequestException:
             pass
 
-    threads = []
-    for sub in subdomains:
-        t = threading.Thread(target=check_sub, args=(sub,))
-        threads.append(t)
+    threads = [threading.Thread(target=check_sub, args=(sub,)) for sub in subdomains]
+    for t in threads:
         t.start()
-
     for t in threads:
         t.join()
 
@@ -81,15 +83,10 @@ def find_admin_page(target):
         print(colored("   [❌] Wordlist admin_pages.txt tidak ditemukan!", "red"))
         return
 
-    headers = {
-        "User-Agent": "Mozilla/5.0",
-        "Referer": "https://www.google.com/"
-    }
-
     def check_admin(page):
         url = f"http://{target}/{page}"
         try:
-            response = requests.get(url, timeout=3, headers=headers)
+            response = requests.get(url, timeout=3)
             if response.status_code < 400:
                 print(colored(f"   [✅] Found: {url}", "green"))
         except requests.RequestException:
@@ -113,7 +110,7 @@ def detect_cms(target):
             if response.status_code < 400:
                 print(colored(f"   [✅] CMS Detected: {cms}", "green"))
                 return
-        except requests.ConnectionError:
+        except requests.RequestException:
             pass
     print(colored("   [❌] CMS not detected", "red"))
 
@@ -123,12 +120,14 @@ def sqli_scanner(url):
     print(colored(f"\n[🔎] Scanning SQL Injection on {url}...", "yellow"))
     
     for payload in payloads:
-        test_url = url + payload
-        response = requests.get(test_url)
-        
-        if "mysql" in response.text.lower() or "syntax" in response.text.lower():
-            print(colored(f"   [✅] SQL Injection ditemukan! Payload: {payload}", "green"))
-            return
+        try:
+            test_url = url + payload
+            response = requests.get(test_url)
+            if "mysql" in response.text.lower() or "syntax" in response.text.lower():
+                print(colored(f"   [✅] SQL Injection ditemukan! Payload: {payload}", "green"))
+                return
+        except requests.RequestException as e:
+            print(colored(f"   [❌] Request error: {e}", "red"))
     
     print(colored("   [❌] Tidak ditemukan SQL Injection.", "red"))
 
@@ -138,12 +137,14 @@ def xss_scanner(url):
     print(colored(f"\n[🔎] Scanning XSS on {url}...", "yellow"))
     
     for payload in payloads:
-        test_url = url + "?q=" + payload
-        response = requests.get(test_url)
-        
-        if payload in response.text:
-            print(colored(f"   [✅] XSS ditemukan! Payload: {payload}", "green"))
-            return
+        try:
+            test_url = url + "?q=" + payload
+            response = requests.get(test_url)
+            if payload in response.text:
+                print(colored(f"   [✅] XSS ditemukan! Payload: {payload}", "green"))
+                return
+        except requests.RequestException as e:
+            print(colored(f"   [❌] Request error: {e}", "red"))
     
     print(colored("   [❌] Tidak ditemukan XSS vulnerability.", "red"))
 
@@ -157,10 +158,12 @@ def check_ssl(target):
             cert = s.getpeercert()
             issuer = dict(x[0] for x in cert["issuer"])
             print(colored(f"   [✅] SSL Issuer: {issuer.get('organizationName', 'Unknown')}", "green"))
-    except Exception:
+    except ssl.SSLError:
         print(colored("   [❌] No valid SSL certificate detected", "red"))
+    except Exception as e:
+        print(colored(f"   [❌] SSL check error: {e}", "red"))
 
-# Menu utama (Looping agar tidak keluar setelah 1 pilihan)
+# Menu utama (Looping biar gak keluar langsung)
 def main():
     print_banner()
     target = input(colored("[+] Enter target domain (without http/https): ", "cyan"))
