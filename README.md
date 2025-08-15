@@ -106,11 +106,10 @@ Setiap hasil scan akan otomatis disimpan di folder *logs/* dengan format:
 
 ## ⚠️ Disclaimer
 
-#### Tool ini dibuat untuk pembelajaran dan pengujian keamanan pada sistem milik sendiri atau yang memiliki izin resmi.
-Segala bentuk penyalahgunaan bukan tanggung jawab pembuat.
+#### Tool ini dibuat untuk pembelajaran dan pengujian keamanan pada sistem milik sendiri atau yang memiliki izin resmi. Segala bentuk penyalahgunaan bukan tanggung jawab pembuat.
 
 ---
 
 ## Credit
 
-Made by Peju3ncer © 2025
+Made by **Peju3ncer** © 2025
