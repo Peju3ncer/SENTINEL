@@ -43,7 +43,8 @@ php -v
 
 Instal di Linux/Termux:
 ```
-sudo apt update && sudo apt install php php-cli php-curl php-openssl php-mbstring whois -y
+sudo apt update && sudo apt install php php-cli php-curl php-openssl php-mbstring whois -y <----(Linux)
+pkg update && pkg upgrade -y pkg install php php-curl php-openssl php-mbstring whois -y <----(Termux)
 ```
 Install di Windows:
 - [Install PHP di](https://www.php.net/downloads)
