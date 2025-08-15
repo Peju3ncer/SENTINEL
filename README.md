@@ -56,7 +56,7 @@ Install di Windows:
 
 ### 1. Clone atau download repository:
 ```
-git clone https://github.com/username/SENTINEL.git
+git clone https://github.com/Peju3ncer/SENTINEL.git
 cd SENTINEL
 ```
 ### 2. Pastikan file *sentinel.php* bisa dijalankan:
