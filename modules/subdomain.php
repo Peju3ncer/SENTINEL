@@ -1,5 +1,5 @@
 <?php
-function findSubdomains($target, $wordlist="wordlists/subdomains.txt") {
+function findSubdomains($target, $wordlist="wordlists/subdomain.txt") {
     echo Colors::YELLOW."[🔎] Searching subdomains for $target...\n".Colors::RESET;
     if (!file_exists($wordlist)) {
         echo Colors::RED."[-] Subdomain wordlist not found!\n".Colors::RESET;
