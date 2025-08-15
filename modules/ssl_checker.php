@@ -10,4 +10,4 @@ function checkSSL($target) {
         return;
     }
 
-    $params = stream_context_get_params($read
+    $params = stream_context_get_params($read);
