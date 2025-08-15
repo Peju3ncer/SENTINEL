@@ -78,7 +78,7 @@ Atau (jika ada shebang *#!/usr/bin/env php* di atas):
 ```
 No	Fitur	Deskripsi
 
-1 WHOIS Lookup	Menampilkan informasi WHOIS domain
+1  WHOIS Lookup	Menampilkan informasi WHOIS domain
 2	Port Scanner	Memeriksa port umum yang terbuka pada target
 3	Subdomain Finder	Mencari subdomain menggunakan wordlist
 4	Admin Page Finder	Mencari halaman login admin
