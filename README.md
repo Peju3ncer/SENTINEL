@@ -79,14 +79,14 @@ Atau (jika ada shebang *#!/usr/bin/env php* di atas):
 ```
 No	Fitur	Deskripsi
 
-1  WHOIS Lookup	Menampilkan informasi WHOIS domain
-2	Port Scanner	Memeriksa port umum yang terbuka pada target
-3	Subdomain Finder	Mencari subdomain menggunakan wordlist
-4	Admin Page Finder	Mencari halaman login admin
-5	CMS Detector	Mendeteksi CMS (WordPress, Joomla, Drupal)
-6	SQL Injection Scanner	Mengecek potensi SQLi pada parameter GET
-7	XSS Scanner	Mengecek potensi XSS pada parameter GET
-8	SSL Certificate Checker	Mengecek informasi sertifikat SSL
+1. WHOIS Lookup	Menampilkan informasi WHOIS domain
+2. Port Scanner	Memeriksa port umum yang terbuka pada target
+3. Subdomain Finder	Mencari subdomain menggunakan wordlist
+4. Admin Page Finder	Mencari halaman login admin
+5. CMS Detector	Mendeteksi CMS (WordPress, Joomla, Drupal)
+6. SQL Injection Scanner	Mengecek potensi SQLi pada parameter GET
+7. XSS Scanner	Mengecek potensi XSS pada parameter GET
+8. SSL Certificate Checker	Mengecek informasi sertifikat SSL
 ```
 
 ---
