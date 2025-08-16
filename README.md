@@ -77,7 +77,7 @@ Atau (jika ada shebang *#!/usr/bin/env php* di atas):
 
 ## 📌 Fitur
 ```
-No	Fitur	Deskripsi
+No	Fitur & Deskripsi
 
 1. WHOIS Lookup	Menampilkan informasi WHOIS domain
 2. Port Scanner	Memeriksa port umum yang terbuka pada target
