@@ -1,3 +1,5 @@
+![SENTINEL_PICTURE](sentinel.png)
+
 # SENTINEL PHP CLI - Terminal Web Security Scanner v1.0
 
 **SENTINEL** adalah tool scanner keamanan berbasis PHP yang berjalan di terminal (CLI) untuk melakukan berbagai pengecekan pada target website.  
